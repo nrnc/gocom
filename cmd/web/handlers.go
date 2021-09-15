@@ -3,7 +3,8 @@ package main
 import "net/http"
 
 func (app *application) VirtualTerminal(rw http.ResponseWriter, r *http.Request) {
-	app.infoLogger.Println("Hit the handler")
-
-	rw.Write([]byte("Hello"))
+	if err := app.renderTemplate(rw, r, "terminal", nil); err != nil {
+		app.errorLogger.Println(err)
+		return
+	}
 }
